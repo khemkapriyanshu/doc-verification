@@ -22,7 +22,7 @@ def render():
         "API key",
         value=current,
         type="password",
-        placeholder="AIza…",
+        placeholder="API KEY HERE",
     )
 
     if st.button("Save API key", type="primary"):

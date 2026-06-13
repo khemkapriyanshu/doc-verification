@@ -35,7 +35,7 @@ def render():
         st.info("No verifications run yet. Go to **Enter marks** to verify your first marksheet.")
         return
 
-    # ── Filters ───────────────────────────────────────────────────────────────
+    #  Filters 
     col1, col2 = st.columns([1, 3])
     with col1:
         status_filter = st.selectbox("Filter by status", ["All", "verified", "flagged", "warning"])
@@ -57,7 +57,7 @@ def render():
     st.caption(f"Showing {len(filtered)} of {len(records)} records")
     st.markdown("---")
 
-    # ── Summary cards ─────────────────────────────────────────────────────────
+    #  Summary cards 
     total     = len(records)
     verified  = sum(1 for r in records if r.get("overall_status") == "verified")
     flagged   = sum(1 for r in records if r.get("overall_status") == "flagged")
@@ -71,7 +71,7 @@ def render():
 
     st.markdown("---")
 
-    # ── Record list ───────────────────────────────────────────────────────────
+    #  Record list 
     if "open_record" not in st.session_state:
         st.session_state.open_record = None
 

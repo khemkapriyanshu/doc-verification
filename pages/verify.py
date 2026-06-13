@@ -16,8 +16,7 @@ from utils.comparator import compare
 from utils.storage import save_record, report_dict_from_report
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
-
+#  Helpers
 def get_api_key() -> str | None:
     key = st.session_state.get("gemini_api_key") or os.environ.get("GEMINI_API_KEY", "")
     return key.strip() if key else None
@@ -74,16 +73,15 @@ def subject_row_html(r) -> str:
     return ""
 
 
-# ── Main render ───────────────────────────────────────────────────────────────
-
+# ── Main render
 def render():
     api_key = get_api_key()
 
     if not api_key:
-        st.warning("⚙️ Add your Gemini API key in **Settings** before verifying.", icon="🔑")
+        st.warning("Add your Gemini API key in **Settings** before verifying.", icon="🔑")
         return
 
-    # ── Step 1: Student info ──────────────────────────────────────────────────
+    # Student info 
     st.markdown('<div class="section-eyebrow">Step 1 — Student details</div>', unsafe_allow_html=True)
 
     col1, col2, col3 = st.columns([2, 1.5, 1])
@@ -98,7 +96,7 @@ def render():
 
     st.markdown("---")
 
-    # ── Step 2: Subject entry ─────────────────────────────────────────────────
+    #  Subject entry 
     st.markdown('<div class="section-eyebrow">Step 2 — Entered marks</div>', unsafe_allow_html=True)
     st.caption("Add each subject and the marks as claimed in the application form.")
 
@@ -140,7 +138,7 @@ def render():
 
     st.markdown("---")
 
-    # ── Step 3: Upload marksheet ──────────────────────────────────────────────
+    #  Upload marksheet 
     st.markdown('<div class="section-eyebrow">Step 3 — Upload marksheet</div>', unsafe_allow_html=True)
 
     uploaded = st.file_uploader(
@@ -150,14 +148,14 @@ def render():
     )
 
     if uploaded:
-        st.success(f"📄 {uploaded.name} uploaded — ready to verify")
+        st.success(f" {uploaded.name} uploaded — ready to verify")
 
     st.markdown("---")
 
-    # ── Verify button ─────────────────────────────────────────────────────────
+    #  Verify button 
     run_disabled = not uploaded or not any(s["name"] for s in st.session_state.subjects)
 
-    if st.button("🔍  Verify marksheet", type="primary", disabled=run_disabled, use_container_width=True):
+    if st.button(" Verify marksheet", type="primary", disabled=run_disabled, use_container_width=True):
         _run_verification(
             api_key, student_name, roll_number, exam_class, board,
             uploaded, tolerance
@@ -183,7 +181,7 @@ def _run_verification(api_key, student_name, roll_number, exam_class, board, upl
     }
 
     # Extract
-    with st.spinner("🔍 Sending to Gemini Vision…"):
+    with st.spinner("Sending to Gemini Vision…"):
         try:
             extracted, preview_img = extract_from_uploaded_file(uploaded, api_key)
         except Exception as e:
@@ -205,7 +203,7 @@ def _run_verification(api_key, student_name, roll_number, exam_class, board, upl
         overall_status=report.overall_status,
     )
 
-    # ── Show results ──────────────────────────────────────────────────────────
+    #  Show results 
     st.markdown("## Verification result")
     st.markdown(f'Record ID: <span class="mono">{record_id}</span>', unsafe_allow_html=True)
     st.markdown(status_badge(report.overall_status), unsafe_allow_html=True)
@@ -256,11 +254,11 @@ def _run_verification(api_key, student_name, roll_number, exam_class, board, upl
         st.json(extracted)
 
     if report.overall_status == "verified":
-        st.success("✅ All subjects match. This application can proceed to the next stage.")
+        st.success("All subjects match. This application can proceed to the next stage.")
     elif report.overall_status == "flagged":
         st.error(
-            f"⚑ {len(report.flagged_subjects)} subject(s) flagged. "
+            f" {len(report.flagged_subjects)} subject(s) flagged. "
             "Please queue this application for manual review before proceeding."
         )
     elif report.overall_status == "warning":
-        st.warning("⚠ Some subjects returned grade-only data. Manual check recommended for these subjects.")
+        st.warning(" Some subjects returned grade-only data. Manual check recommended for these subjects.")

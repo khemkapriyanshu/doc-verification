@@ -106,7 +106,7 @@ html, body, [class*="css"] {
 st.markdown("""
 <div class="topbar">
     <div class="topbar-brand">
-        🎓 Digi<span>Cert</span>
+         <span>DigiCert</span>
     </div>
     <div style="font-size:0.8rem; color:#9b9590;">Marksheet verification for college admissions</div>
 </div>
@@ -118,17 +118,17 @@ if "page" not in st.session_state:
 
 col1, col2, col3 = st.columns([1, 1, 1])
 with col1:
-    if st.button("📋  Enter marks", use_container_width=True,
+    if st.button("  Enter marks", use_container_width=True,
                  type="primary" if st.session_state.page == "verify" else "secondary"):
         st.session_state.page = "verify"
         st.rerun()
 with col2:
-    if st.button("📁  View results", use_container_width=True,
+    if st.button("Results Dashboard", use_container_width=True,
                  type="primary" if st.session_state.page == "results" else "secondary"):
         st.session_state.page = "results"
         st.rerun()
 with col3:
-    if st.button("⚙️  Settings", use_container_width=True,
+    if st.button(" Settings", use_container_width=True,
                  type="primary" if st.session_state.page == "settings" else "secondary"):
         st.session_state.page = "settings"
         st.rerun()
