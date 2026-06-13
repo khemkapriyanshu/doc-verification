@@ -5,6 +5,12 @@ Accepts marksheets from any Indian board in any language, extracts structured da
 
 ---
 
+<p align="center">
+  <img src="./pipeline-flow.png" alt="Document Verification Pipeline" width="900">
+</p>
+
+---
+
 ## File structure
 
 ```
@@ -73,13 +79,6 @@ Alternatively, paste your API key directly in the **Settings** tab — no `.env`
 
 ---
 
-## Supported boards
-
-All Indian boards including CBSE, ICSE, Karnataka SSLC/PUC, Maharashtra SSC/HSC,  
-Tamil Nadu SSLC/HSC, AP/Telangana Boards, Kerala, UP Board, Rajasthan, and more.  
-Regional language marksheets supported via Gemini's multilingual capability.
-
----
 
 ## Roadmap
 
